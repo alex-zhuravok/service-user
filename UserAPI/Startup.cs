@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using UserDataAccess;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace UserAPI
 {
@@ -26,6 +29,9 @@ namespace UserAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseNpgsql("Host=192.168.101.194;Port=5432;Database=users;Username=admin;Password=admin_pass"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
