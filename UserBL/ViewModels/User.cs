@@ -1,8 +1,8 @@
 using System;
 
-namespace UserDataAccess.Entities
+namespace UserBL.ViewModels
 {
-    public class User
+    public class UserVM
     {
         public Guid Id { get; set; }
         public string Login { get; set; }
