@@ -32,6 +32,8 @@ namespace UserAPI
 
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseNpgsql("Host=192.168.101.194;Port=5432;Database=users;Username=admin;Password=admin_pass"));
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +43,13 @@ namespace UserAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+             app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseHttpsRedirection();
 
