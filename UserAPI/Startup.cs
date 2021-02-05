@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using UserDataAccess;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using UserBL.Interfaces;
+using UserBL.Managers;
 
 namespace UserAPI
 {
@@ -34,6 +36,9 @@ namespace UserAPI
                 options.UseNpgsql("Host=192.168.101.194;Port=5432;Database=users;Username=admin;Password=admin_pass"));
 
             services.AddSwaggerGen();
+
+            // BL Managers
+            services.AddTransient<IUserManager, UserManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
