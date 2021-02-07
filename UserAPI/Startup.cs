@@ -15,6 +15,8 @@ using UserDataAccess;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using UserBL.Interfaces;
 using UserBL.Managers;
+using AutoMapper;
+using Profiles;
 
 namespace UserAPI
 {
@@ -36,6 +38,8 @@ namespace UserAPI
                 options.UseNpgsql("Host=192.168.101.194;Port=5432;Database=users;Username=admin;Password=admin_pass"));
 
             services.AddSwaggerGen();
+
+            services.AddSingleton(GetMapper());
 
             // BL Managers
             services.AddTransient<IUserManager, UserManager>();
@@ -66,6 +70,17 @@ namespace UserAPI
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private IMapper GetMapper()
+        {
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            return mappingConfig.CreateMapper();
         }
     }
 }

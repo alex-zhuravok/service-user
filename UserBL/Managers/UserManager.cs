@@ -1,35 +1,30 @@
 using System.Threading.Tasks;
-using System.Linq;
 using UserBL.Interfaces;
 using UserBL.ViewModels;
 using UserDataAccess;
 using UserDataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace UserBL.Managers
 {
     public class UserManager: IUserManager
     {
         private readonly ApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public UserManager(ApplicationContext context)
+        public UserManager(ApplicationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<UserVM> AddUserAsync(UserVM user)
         {
-            // TODO: Add Automapper here
-            var userToAdd = new User {
-                Login = user.Login,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                MiddleName = user.MiddleName,
-            };
+            var userToAdd = _mapper.Map<User>(user);
 
             await _context.Users.AddAsync(userToAdd);
-
             await _context.SaveChangesAsync();
 
             user.Id = userToAdd.Id;
@@ -39,14 +34,8 @@ namespace UserBL.Managers
 
         public async Task<IEnumerable<UserVM>> GetAllAsync()
         {
-            // TODO: Add Automapper here
-            return await _context.Users
-                .Select(user => new UserVM {
-                    Login = user.Login,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    MiddleName = user.MiddleName,
-                }).ToListAsync();
+            return await _mapper.ProjectTo<UserVM>(_context.Users.AsQueryable())
+                .ToListAsync();
         }
     }
 }
