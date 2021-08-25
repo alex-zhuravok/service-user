@@ -17,6 +17,7 @@ using UserBL.Interfaces;
 using UserBL.Managers;
 using AutoMapper;
 using Profiles;
+using UserDataAccess.Interfaces;
 
 namespace UserAPI
 {
@@ -34,7 +35,7 @@ namespace UserAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<ApplicationContext>(options =>
+            services.AddDbContext<IDBContext>(options =>
                 options.UseNpgsql("Host=192.168.101.194;Port=5432;Database=users;Username=admin;Password=admin_pass"));
 
             services.AddSwaggerGen();

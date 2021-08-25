@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using UserDataAccess.Entities;
- 
+using UserDataAccess.Interfaces;
+
 namespace UserDataAccess
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : DbContext, IDBContext
     {
         public DbSet<User> Users { get; set; }
         

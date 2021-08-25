@@ -6,15 +6,16 @@ using UserDataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using AutoMapper;
+using UserDataAccess.Interfaces;
 
 namespace UserBL.Managers
 {
     public class UserManager: IUserManager
     {
-        private readonly ApplicationContext _context;
+        private readonly IDBContext _context;
         private readonly IMapper _mapper;
 
-        public UserManager(ApplicationContext context, IMapper mapper)
+        public UserManager(IDBContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
