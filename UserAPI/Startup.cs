@@ -35,7 +35,7 @@ namespace UserAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<IDBContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
                 options.UseNpgsql("Host=192.168.101.194;Port=5432;Database=users;Username=admin;Password=admin_pass"));
 
             services.AddSwaggerGen();
